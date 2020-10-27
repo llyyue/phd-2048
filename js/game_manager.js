@@ -5,7 +5,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.actuator       = new Actuator;
 
   this.startTiles     = 2;
-  this.relDuration    = 100; // Duration (sec) of a relationship
+  this.relDuration    = 1000; // Duration (sec) of a relationship
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -163,7 +163,12 @@ GameManager.prototype.moveTile = function (tile, cell) {
 
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
-  // 0: up, 1: right, 2: down, 3: left
+  // 0: up, 1: right, 2: down, 3: left, 4: Loop 100
+  if(direction==4){
+    for(let i=0;i<100;i++){
+      this.move(i%4);
+    }
+  }
   var self = this;
 
   if (this.isGameTerminated()) return; // Don't do anything if the game's over

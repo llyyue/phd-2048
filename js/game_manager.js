@@ -5,7 +5,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.actuator       = new Actuator;
 
   this.startTiles     = 2;
-  this.relDuration    = 10; // Duration (sec) of a relationship
+  this.relDuration    = 100; // Duration (sec) of a relationship
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -44,7 +44,7 @@ GameManager.prototype.setup = function () {
     this.over        = previousState.over;
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
-    this.maxTile     = previousState.maxTile || 4;
+    this.maxTile     = previousState.maxTile || 6;
     this.garbCount   = previousState.garbCount || 0;
     this.karma       = previousState.karma || 0;
     this.relTime     = previousState.relTime || null;
@@ -65,7 +65,7 @@ GameManager.prototype.setup = function () {
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
-    this.maxTile     = 4;
+    this.maxTile     = 6;
     this.garbCount   = 0;
     this.karma       = 0;
     this.relTime     = null;
@@ -95,7 +95,7 @@ GameManager.prototype.addRandomTile = function () {
     if(this.maxTile >= 1024) p = 0.001;
     else if(this.maxTile >= 256) p = 0.002;
     var value = coin < 0.9 ? 2 : 4;
-    if(this.karma == 0 && this.relTime == null && numCellsAvailable > 1 && numCellsAvailable < 10 && coin >= 0.9-9*p && coin < 0.9+p){
+    if(this.karma == 0 && this.relTime == null && numCellsAvailable > 1 && numCellsAvailable < 100 && coin >= 0.9-9*p && coin < 0.9+p){
       value = 1;
       this.relTime = new Date().getTime();
       this.setTimer();
